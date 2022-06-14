@@ -16,17 +16,27 @@ import Toolbar from '@mui/material/Toolbar';
 import MailIcon from '@mui/icons-material/Mail';
 import MenuIcon from '@mui/icons-material/Menu';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
+import DayBlock from './DayBlock/DayBlock';
+import { Calendar } from 'react-calendar';
+
+import 'react-calendar/dist/Calendar.css';
+import WeekView from './WeekView/WeekView';
 
 const drawerWidth = 240;
 
 function ResponsiveDrawer(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
-
+    const [selected, setSelected] = React.useState('Day');
+    const [selectedDay, setSelectedDay] = React.useState(new Date());
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
-  };
-
+    };
+    //change base on page selected
+    const handleClick = (page) => {
+        setSelected(page);
+    }
+    
   const drawer = (
     <div>
       <Toolbar />
@@ -34,7 +44,7 @@ function ResponsiveDrawer(props) {
       <List>
         {['Day', 'Week', 'Month', 'New Bill'].map((text, index) => (
           <ListItem key={text} disablePadding>
-            <ListItemButton>
+            <ListItemButton onClick={() => handleClick(text)}>
               <ListItemIcon>
                 {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
               </ListItemIcon>
@@ -108,16 +118,28 @@ function ResponsiveDrawer(props) {
       </Box>
       <Box
         component="main"
-        sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
+        sx={{ flexGrow: 1, p: 3, width: { sm: `calc((100% - ${drawerWidth}px)/2)` } }}
       >
-        <Toolbar />
-        <Typography paragraph>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        </Typography>
-        <Typography paragraph>
-          Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper
-        </Typography>
-      </Box>
+              <Toolbar />
+              {selected === "Day" && (
+                      
+                  <DayBlock>
+                  {selectedDay.toDateString()}
+              </DayBlock>
+              )}
+              {selected === "Week" && (
+                  <>
+                     <WeekView day={selectedDay} />
+                  </>
+        )}
+          </Box>
+          <Box
+              component="main"
+              sx={{ flexGrow: 1, p: 3, width: { sm: `calc((100% - ${drawerWidth}px)/2)` } }}
+          >
+              <Toolbar />
+              <Calendar value={selectedDay} onChange={setSelectedDay}/>
+              </Box>
     </Box>
   );
 }
