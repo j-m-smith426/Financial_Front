@@ -4,7 +4,9 @@ import React from 'react';
 const DayBlock = (props) => {
   return (
       <Box sx={{ display: 'flex' , flexDirection: 'column', justifyContent: 'space-evenly', height: 'calc(100vh / 8)'}} >
-          {props.children}
+            {props.children}
+              
+          
       </Box>   
   );
 }

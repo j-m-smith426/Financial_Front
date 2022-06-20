@@ -1,0 +1,7 @@
+.day_block{
+    cursor: pointer;
+}
+
+.day_block:hover{
+    background-color: aqua;
+}

@@ -21,6 +21,7 @@ import { Calendar } from 'react-calendar';
 
 import 'react-calendar/dist/Calendar.css';
 import WeekView from './WeekView/WeekView';
+import DayView from './DayView/DayView';
 
 const drawerWidth = 240;
 
@@ -122,14 +123,16 @@ function ResponsiveDrawer(props) {
       >
               <Toolbar />
               {selected === "Day" && (
-                      
+                <>
                   <DayBlock>
                   {selectedDay.toDateString()}
-              </DayBlock>
+                  </DayBlock>
+                  <DayView selectedDay={selectedDay}/>
+                </>
               )}
               {selected === "Week" && (
                   <>
-                     <WeekView day={selectedDay} />
+                      <WeekView day={selectedDay} nav={setSelected} selectDay={setSelectedDay}/>
                   </>
         )}
           </Box>
