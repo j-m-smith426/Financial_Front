@@ -1,0 +1,10 @@
+form{
+    display:flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    /* align-items: end; */
+}
+
+form > button{
+    align-self: end;
+}

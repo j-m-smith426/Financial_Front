@@ -1,5 +1,4 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -23,20 +22,28 @@ import 'react-calendar/dist/Calendar.css';
 import WeekView from './WeekView/WeekView';
 import DayView from './DayView/DayView';
 import MonthView from './MonthView/MonthView';
+import { useDispatch, useSelector } from 'react-redux';
+import EditForm from './EditForm/EditForm';
+import './Styles.css'
 
 const drawerWidth = 240;
 
 function ResponsiveDrawer(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
-    const [selected, setSelected] = React.useState('Day');
-    const [selectedDay, setSelectedDay] = React.useState(new Date());
+
+  const dispatch = useDispatch();
+    const selected = useSelector((state) => state.pageReducer.page);
+    const selectedDay = useSelector((state) => new Date(state.pageReducer.selectedDay));
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
     };
     //change base on page selected
     const handleClick = (page) => {
-        setSelected(page);
+      dispatch({
+        type: "Page",
+        payload: page
+        })
     }
     
   const drawer = (
@@ -58,6 +65,13 @@ function ResponsiveDrawer(props) {
       
     </div>
   );
+
+  const handleDayChange = (date) => {
+    dispatch({
+      type: "SelectedDay",
+      payload: date.toISOString()
+    })
+  }
 
   const container = window !== undefined ? () => window().document.body : undefined;
 
@@ -133,12 +147,18 @@ function ResponsiveDrawer(props) {
               )}
               {selected === "Week" && (
                   <>
-                      <WeekView day={selectedDay} nav={setSelected} selectDay={setSelectedDay}/>
+                      <WeekView />
                   </>
         )}
         {selected === "Month" && (
           <>
             <MonthView selected={selectedDay} />
+          </>
+        )}
+
+        {selected === "New Bill" && (
+          <>
+          <EditForm />
           </>
         )}
           </Box>
@@ -147,18 +167,12 @@ function ResponsiveDrawer(props) {
               sx={{ flexGrow: 1, p: 3, width: { sm: `calc((100% - ${drawerWidth}px)/2)` } }}
           >
               <Toolbar />
-              <Calendar value={selectedDay} onChange={setSelectedDay}/>
+              <Calendar value={selectedDay} onChange={handleDayChange}/>
               </Box>
     </Box>
   );
 }
 
-ResponsiveDrawer.propTypes = {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
-  window: PropTypes.func,
-};
+
 
 export default ResponsiveDrawer;
