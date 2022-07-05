@@ -1,3 +1,4 @@
+import { Button } from '@mui/material';
 import { add } from 'date-fns';
 import React from 'react';
 import { formatDate } from '../../util/functions/FormatDate';
@@ -13,19 +14,14 @@ const DayView = (props) => {
     return (
     <div>
             {data.map((bill) => (
-                <DayBlock>
-                     <p>
-                     Bill Name: {bill.name}
-               </p>
-
-               <ul>
-                   <li>Amount: ${bill.amount}</li>
-               </ul>
-               
-                    
-                    
+                <DayBlock blockType="bill" bill={bill}>
+                               
+                                       
           </DayBlock>
-      ))}
+            ))}
+        <DayBlock blockType="empty">
+          
+        </DayBlock>
     </div>
   );
 }

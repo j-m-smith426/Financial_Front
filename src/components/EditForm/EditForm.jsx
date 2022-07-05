@@ -1,10 +1,14 @@
 import { Button, TextField } from '@mui/material';
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useSaveBillMutation, useUpdateBillMutation } from '../../util/store/billApi';
 
 const EditForm = (props) => {
-    const date = useSelector((state) => new Date(state.pageReducer.selectedDay))
-    const defaultValues = {
+    const date = useSelector((state) => new Date(state.pageReducer.selectedDay));
+    const dispatch = useDispatch();
+    const [updateBill] = useUpdateBillMutation()
+    const [saveBill] = useSaveBillMutation();
+    const defaultValues = props.bill || {
         name: "",
         amount: 0.0,
         date: date,
@@ -21,7 +25,20 @@ const EditForm = (props) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(formValue)
+        props.bill ? updateBill(formValue) : saveBill(formValue);
+        props.setEdit && props.setEdit(false);
+        dispatch({
+            type: "Page",
+            payload:"Day"
+        })
+    }
+
+    const handleCancelClick = () => {
+        props.setEdit && props.setEdit(false);
+        dispatch({
+            type: "Page",
+            payload:"Day"
+        })
     }
 
   return (
@@ -53,10 +70,18 @@ const EditForm = (props) => {
               margin='normal'
               disabled
           />
-          
+          <div className='buttons'>
+              
           <Button variant='contained' color='primary' type='submit'>
               Submit
           </Button>
+          {props.setEdit ? (
+              <Button variant='contained' color='primary' type='submit' onClick={handleCancelClick}>
+                  Cancel
+              </Button>
+          ) : <></>
+        }
+        </div>
           
     </form>
   );

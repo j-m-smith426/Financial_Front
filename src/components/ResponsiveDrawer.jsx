@@ -139,7 +139,7 @@ function ResponsiveDrawer(props) {
               <Toolbar />
               {selected === "Day" && (
                 <>
-                  <DayBlock>
+                  <DayBlock blockType="title">
                   {selectedDay.toDateString()}
                   </DayBlock>
                   <DayView selectedDay={selectedDay}/>

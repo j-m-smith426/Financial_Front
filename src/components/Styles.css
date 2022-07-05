@@ -5,6 +5,11 @@ form{
     /* align-items: end; */
 }
 
-form > button{
+button{
     align-self: end;
+    margin: 1px !important;
 }
+
+form > .buttons{
+    align-self: flex-end;
+} 
