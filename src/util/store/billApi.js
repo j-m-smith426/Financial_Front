@@ -3,7 +3,7 @@ import { axiosBaseQuery } from "../axios/axiosConfig";
 
 export const billApi = createApi({
     reducerPath: 'billApi',
-    baseQuery: axiosBaseQuery({ baseUrl: 'http://localhost:5000/' }),
+    baseQuery: axiosBaseQuery({ baseUrl: process.env.REACT_APP_DB_ACCESS_STRING }),
     tagTypes: ["Bill"],
     endpoints: (builder) => ({
         getBillById: builder.query({
