@@ -40,17 +40,24 @@ Setup:
 ## New Bill
 
 - Enter Bill name and amount, select Date useing the calender
+  ![New Bill](./src/assets/NewBill-View.jpg?raw=true "New Bill Page")
 - Submit to send to db
 
 ## Month
 
 - Click a week to see more details
+  ![Month View](./src/assets/Month-View.jpg?raw=true "Month View Page")
 
 ## Week
 
 - Click a day to see more details
+  ![Week View](./src/assets/Week-View.jpg?raw=true "Week View Page")
 
 ## Day
 
+![Day View Empty](./src/assets/Day-Empty.jpg?raw=true "Day View Empty")
+
 - Click the edit button to edit a specific bill
 - Click the + icon to add a new bill to the date
+
+![Day View Populated](./src/assets/Day-Populated.jpg?raw=true "Day View Populated")

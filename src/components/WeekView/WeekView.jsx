@@ -26,7 +26,8 @@ const WeekView = (props) => {
         
         for (let i = 0; i < result.length; i++){
             const resultDate = result[i][0].date.split('-')[2];
-            if (''+date.getDate() === ''+resultDate) {
+            const currentDate = date.getDate() < 10 ? '0' + date.getDate() : '' + date.getDate();
+            if (currentDate === ''+resultDate) {
                 let length = result[i].length
                 let sum = 0;
                 for (let j of result[i]) {
